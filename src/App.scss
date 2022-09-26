@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+$blueColor: rgba($color: #1d53b0, $alpha: 1.0);
+$greyColor: rgba($color: #5e6063, $alpha: 1.0);
+.App {
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+}
+h1,h2,h3,p {
+  margin: 0;
+  padding: 0;
+}
+

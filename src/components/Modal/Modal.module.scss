@@ -1,0 +1,57 @@
+@keyframes modalAnima {
+    from{
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+.modal {
+    color: #000000; 
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    
+}
+.modalWrapper {
+    background: rgba($color: #aeaeae, $alpha: 0.9);;
+    width: 50rem;
+    height: 40rem;
+    position: fixed;
+    top: 1rem;
+    left: calc(50% - 25rem);
+    box-shadow: 15px 0 10px 0 rgba(0,0,0,0.2);
+    border-radius: 20px;
+    display: flex;
+    padding: 4rem;
+    z-index: 10;
+    animation-name: modalAnima;
+    animation-duration: 0.7s;
+    
+}
+.name {
+    font-size: 75px;
+    
+}
+.info {
+    font-size: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.row {
+    font-size: 23px;
+}
+.close {
+    cursor: pointer;
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    transition: all .3s ease;
+    transform: scale(2);
+    &:hover {
+        transform: scale(4);
+    }
+}
