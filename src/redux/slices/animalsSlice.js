@@ -11,7 +11,7 @@ export const animalsSlice = createSlice({
   name: 'animals',
   initialState,
   reducers: {
-    setIsOpen: (state, action) => {
+    setIsOpenModal: (state, action) => {
         state.isOpen = action.payload
     },
     setChoise: (state, action) => {
@@ -27,6 +27,6 @@ export const animalsSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setIsOpen, setChoise, setIsLoading, setOffset } = animalsSlice.actions
+export const { setIsOpenModal, setChoise, setIsLoading, setOffset } = animalsSlice.actions
 
 export default animalsSlice.reducer

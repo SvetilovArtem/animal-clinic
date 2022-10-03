@@ -9,9 +9,9 @@ import styles from './TodayPage.module.scss'
 
 
 const TodayPage = ({ animalsToday, setAnimalsToday }) => {
-  const isOpen = useSelector(state => state.animalReducer.isOpen)
-  const choise = useSelector(state => state.animalReducer.choise)
-  const isLoading = useSelector(state => state.animalReducer.isLoading)
+  const isOpen = useSelector(state => state.todayReducer.isOpen)
+  const choise = useSelector(state => state.todayReducer.choise)
+  const isLoading = useSelector(state => state.todayReducer.isLoading)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const TodayPage = ({ animalsToday, setAnimalsToday }) => {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       }
     }).then(resp => {
-      setIsLoading(false)
+      dispatch(setIsLoading(false))
       setAnimalsToday(resp.data.results)})
       
   }, [])

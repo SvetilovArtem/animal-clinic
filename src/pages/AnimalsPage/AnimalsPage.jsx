@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { Oval, Preloader } from 'react-preloader-icon'
 import { useDispatch, useSelector } from 'react-redux'
 import Modal from '../../components/Modal/Modal'
-import { setChoise, setIsLoading, setIsOpen, setOffset } from '../../redux/slices/animalsSlice'
+import { setChoise, setIsLoading, setIsOpenModal, setOffset } from '../../redux/slices/animalsSlice'
 
 import styles from './AnimalsPage.module.scss'
 import Pagination from './Pagination/Pagination'
@@ -51,7 +51,7 @@ const AnimalsPage = ({
       {animals.map(animal => {
 
         return <li key={animal.id} className={styles.animal} onClick={() => {
-          dispatch(setIsOpen(!isOpen))
+          dispatch(setIsOpenModal(!isOpen))
           dispatch(setChoise(animals.indexOf(animal)))
           }} >
           <h3>{animal.spec.name}</h3>

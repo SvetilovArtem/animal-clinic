@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { useDispatch } from 'react-redux'
-import { setIsOpen } from '../../redux/slices/animalsSlice'
+import { setIsOpenModal } from '../../redux/slices/animalsSlice'
+import { setIsOpen } from '../../redux/slices/todaySlice'
 import styles from './Modal.module.scss'
 
 const Modal = ({ animal, type }) => {
@@ -32,6 +33,7 @@ const Modal = ({ animal, type }) => {
 
           <span className={styles.close} onClick={() => {
             dispatch(setIsOpen(false))
+            dispatch(setIsOpenModal(false))
             }}>&times;</span>
         </div>   
         
