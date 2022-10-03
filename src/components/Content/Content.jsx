@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import AnimalsPage from '../../pages/AnimalsPage/AnimalsPage'
@@ -27,6 +27,11 @@ const Content = ({
   const dispatch = useDispatch()
   
   const navigate = useNavigate()
+
+
+  useEffect(() => {
+    navigate('/')
+  },[])
  
   function handleClick() {
     axios.post('https://acits-test-back.herokuapp.com/api/login', {
@@ -70,7 +75,6 @@ const Content = ({
               setPasswordError={setPasswordError}
               token={token}
             />} />
-          
             <Route path='/today' element={<TodayPage setAnimalsToday={setAnimalsToday} animalsToday={animalsToday} />} />
             <Route path='/animals' element={<AnimalsPage setAnimals={setAnimals} currentPage={currentPage} setCurrentPage={setCurrentPage} animals={animals} setAnimalsCount={setAnimalsCount} animalsCount={animalsCount} />} />
         </Routes>
