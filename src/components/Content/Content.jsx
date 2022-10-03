@@ -1,19 +1,15 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import AnimalsPage from '../../pages/AnimalsPage/AnimalsPage'
 import LoginPage from '../../pages/LoginPage/LoginPage'
 import MainPage from '../../pages/MainPage/MainPage'
 import TodayPage from '../../pages/TodayPage/TodayPage'
+import { setToken } from '../../redux/slices/appSlice'
 import styles from './Content.module.scss'
 
 const Content = ({
-  login, 
-  setLogin, 
-  token, 
-  setToken, 
-  password, 
-  setPassword, 
   setLoginDirty, 
   setPasswordDirty, 
   setLoginError, 
@@ -23,6 +19,12 @@ const Content = ({
   const [animals, setAnimals] = useState([])
   const [animalsCount, setAnimalsCount] = useState('')
   const [currentPage, setCurrentPage] = useState('')
+
+
+  const token = useSelector(state => state.appReducer.token)
+  const login = useSelector(state => state.appReducer.login)
+  const password = useSelector(state => state.appReducer.password)
+  const dispatch = useDispatch()
   
   const navigate = useNavigate()
  
@@ -32,7 +34,7 @@ const Content = ({
       password: password
     }).then((resp) => {
       console.log(resp)
-      setToken(resp.data.accessToken)
+      dispatch(setToken(resp.data.accessToken))
       navigate('/today')
     }) 
 
@@ -42,7 +44,7 @@ const Content = ({
       }
     }).then(resp => {setAnimalsToday(resp.data.results)})
 
-    axios.get(`https://acits-test-back.herokuapp.com/api/animals?limit=5&offset=0`, {
+    axios.get(`https://acits-test-back.herokuapp.com/api/animals?limit=9&offset=0`, {
       headers: { 
         'Authorization': 'Bearer ' + token
       }
@@ -50,10 +52,6 @@ const Content = ({
       setAnimals(data.data.results)
       setAnimalsCount(data.data.count)
     })
-  }
-
-  function refreshToken() {
-
   }
 
   localStorage.setItem("token", token)
@@ -65,8 +63,6 @@ const Content = ({
             path='/login' 
             element={
             <LoginPage 
-              setLogin={setLogin} 
-              setPassword={setPassword}
               handleClick={handleClick} 
               setLoginDirty={setLoginDirty}
               setPasswordDirty={setPasswordDirty}

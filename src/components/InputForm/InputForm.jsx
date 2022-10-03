@@ -1,4 +1,5 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import styles from './InputForm.module.scss'
 
 const InputForm = ({ 
@@ -9,6 +10,8 @@ const InputForm = ({
   setPasswordError, 
   setPasswordDirty, 
   name}) => {
+
+    const dispatch = useDispatch()
 
   function onBlurHandler(e) {
     switch(e.currentTarget.name) {
@@ -44,10 +47,9 @@ const InputForm = ({
       type={type} 
       placeholder={type === 'text' ? 'Введите логин' : 'Введите пароль'}
       onChange={e => {
-        setValue(e.currentTarget.value)
+        dispatch(setValue(e.currentTarget.value))
       }}
       />
-      <div></div>
     </>
   )
 }

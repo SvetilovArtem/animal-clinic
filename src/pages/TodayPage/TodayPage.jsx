@@ -1,17 +1,21 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Oval, Preloader } from 'react-preloader-icon'
+import { useDispatch, useSelector } from 'react-redux'
 import Modal from '../../components/Modal/Modal'
+import { setChoise, setIsLoading, setIsOpen } from '../../redux/slices/todaySlice'
+
 import styles from './TodayPage.module.scss'
 
 
 const TodayPage = ({ animalsToday, setAnimalsToday }) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [choise, setChoise] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const isOpen = useSelector(state => state.animalReducer.isOpen)
+  const choise = useSelector(state => state.animalReducer.choise)
+  const isLoading = useSelector(state => state.animalReducer.isLoading)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    setIsLoading(true)
+    dispatch(setIsLoading(true))
     axios.get("https://acits-test-back.herokuapp.com/api/executions/today", {
       headers: { 
         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -37,8 +41,8 @@ const TodayPage = ({ animalsToday, setAnimalsToday }) => {
         {animalsToday.map(animal => {
 
           return <li key={animal.id} className={styles.animal} onClick={() => {
-            setIsOpen(!isOpen)
-            setChoise(animalsToday.indexOf(animal))
+            dispatch(setIsOpen(!isOpen))
+            dispatch(setChoise(animalsToday.indexOf(animal)))
             }} >
             <h3>{animal.animal.spec.name}</h3>
             <p>{animal.type}</p>

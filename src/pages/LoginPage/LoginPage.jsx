@@ -1,12 +1,11 @@
 import React from 'react'
+import { setLogin, setPassword } from '../../redux/slices/appSlice'
 import { NavLink } from 'react-router-dom'
 import InputForm from '../../components/InputForm/InputForm'
 import styles from './LoginPage.module.scss'
 
 const LoginPage = ({
   token, 
-  setLogin, 
-  setPassword, 
   setPasswordError, 
   handleClick, 
   setLoginDirty, 

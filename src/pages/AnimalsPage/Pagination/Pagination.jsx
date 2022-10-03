@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React from 'react'
 import ReactPaginate from 'react-paginate'
+import { useDispatch } from 'react-redux'
 import './Pagination.scss'
 
 
@@ -12,17 +13,19 @@ const Pagination = ({
   setCurrentPage, 
   setOffset, 
   offset}) => {
+
+    const dispatch = useDispatch()
   
   const handlePageClick = (data) => {
   
     setCurrentPage(data.selected + 1)
-    axios.get(`https://acits-test-back.herokuapp.com/api/animals?limit=5&offset=${offset}`, {
+    axios.get(`https://acits-test-back.herokuapp.com/api/animals?limit=9&offset=${offset}`, {
       headers: { 
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       }
     }).then(data => {
       setAnimals(data.data.results)
-      setOffset(currentPage*3)
+      dispatch(setOffset(currentPage + 1))
       setAnimalsCount(data.data.count)
     })
     

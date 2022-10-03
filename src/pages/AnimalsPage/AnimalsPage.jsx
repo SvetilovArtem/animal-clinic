@@ -1,9 +1,13 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Oval, Preloader } from 'react-preloader-icon'
+import { useDispatch, useSelector } from 'react-redux'
 import Modal from '../../components/Modal/Modal'
+import { setChoise, setIsLoading, setIsOpen, setOffset } from '../../redux/slices/animalsSlice'
+
 import styles from './AnimalsPage.module.scss'
 import Pagination from './Pagination/Pagination'
+
 
 const AnimalsPage = ({
   animals, 
@@ -12,22 +16,24 @@ const AnimalsPage = ({
   currentPage, 
   setAnimals, 
   setAnimalsCount}) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [choise, setChoise] = useState('')
-  const [offset, setOffset] = useState(0)
-  const [isLoading, setIsLoading] = useState(false)
+  
+  const isOpen = useSelector(state => state.animalReducer.isOpen)
+  const choise = useSelector(state => state.animalReducer.choise)
+  const isLoading = useSelector(state => state.animalReducer.isLoading)
+  const offset = useSelector(state => state.animalReducer.offset)
+  const dispatch = useDispatch()
 
     useEffect(() => {
-      setIsLoading(true)
-      axios.get(`https://acits-test-back.herokuapp.com/api/animals?limit=5&offset=0`, {
+      dispatch(setIsLoading(true))
+      axios.get(`https://acits-test-back.herokuapp.com/api/animals?limit=9&offset=0`, {
         headers: { 
           'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
       }).then(data => {
         setAnimals(data.data.results)
-        setOffset(currentPage * 5)
+        dispatch(setOffset(currentPage * 5))
         setAnimalsCount(data.data.count)
-        setIsLoading(false)
+        dispatch(setIsLoading(false))
       })
     }, [])
 
@@ -45,8 +51,8 @@ const AnimalsPage = ({
       {animals.map(animal => {
 
         return <li key={animal.id} className={styles.animal} onClick={() => {
-          setIsOpen(!isOpen)
-          setChoise(animals.indexOf(animal))
+          dispatch(setIsOpen(!isOpen))
+          dispatch(setChoise(animals.indexOf(animal)))
           }} >
           <h3>{animal.spec.name}</h3>
           <p>{animal.name}</p>
@@ -54,7 +60,7 @@ const AnimalsPage = ({
         </li> 
 
       })}
-      {isOpen && <Modal animal={animals[choise]} setIsOpen={setIsOpen} type='animals' />}  
+      {isOpen && <Modal animal={animals[choise]} type='animals' />}  
     </ul>
        }
        <Pagination 

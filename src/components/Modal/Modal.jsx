@@ -1,10 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { useDispatch } from 'react-redux'
+import { setIsOpen } from '../../redux/slices/animalsSlice'
 import styles from './Modal.module.scss'
 
-const Modal = ({ animal, setIsOpen, type }) => {
+const Modal = ({ animal, type }) => {
+  
+  const dispatch = useDispatch()
+
   const node = document.querySelector('#modal')
-  console.log(animal)
+  if(!node) return null
+
   return ReactDOM.createPortal(
     <div className={styles.modalWrapper}>
         <div className={styles.modal}>
@@ -24,7 +30,9 @@ const Modal = ({ animal, setIsOpen, type }) => {
             <p className={styles.info}><span className={styles.row}>Вес:</span> {animal.weight?animal.weight:'-'} {animal.weightUnit}</p>
           </>}
 
-          <span className={styles.close} onClick={() => setIsOpen(false)}>&times;</span>
+          <span className={styles.close} onClick={() => {
+            dispatch(setIsOpen(false))
+            }}>&times;</span>
         </div>   
         
     </div>, node
